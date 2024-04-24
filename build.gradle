@@ -29,6 +29,8 @@ repositories {
     mavenCentral()
 }
 
+apply from: 'gradle/integrationTest.gradle'
+
 dependencies {
     //spring-boot-starters
     implementation ("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
@@ -47,6 +49,9 @@ dependencies {
     implementation ("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     implementation ("org.springframework.session:spring-session-jdbc:3.2.2")
 
+    //Validation
+
+    implementation("org.springframework.boot:spring-boot-starter-validation:${springBootVersion}")
     //DB
     implementation ("org.flywaydb:flyway-core")
 
@@ -69,6 +74,12 @@ dependencies {
     //Test dependencies
     testImplementation ("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
     //testImplementation ("org.springframework.security:spring-security-test:6.2.4")
+
+    // https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter
+//    testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
+//
+//    testImplementation 'org.testcontainers:postgresql:1.16.2'
+
 }
 
 tasks.named('test') {

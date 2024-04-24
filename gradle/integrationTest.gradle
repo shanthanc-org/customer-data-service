@@ -1,0 +1,34 @@
+buildscript {
+    ext {
+        testVersion = '1.16.2'
+    }
+}
+
+sourceSets {
+    integrationTest {
+        java.srcDir file('src/integationTest/java')
+        resources.srcDir file('src/integrationTest/resources')
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+dependencies {
+    integrationTestImplementation ("org.testcontainers:junit-jupiter:${testVersion}")
+    integrationTestImplementation ("org.testcontainers:postgresql:${testVersion}")
+}
+
+tasks.register('integrationTest', Test) {
+    dependsOn 'compileIntegrationTests'
+    description = 'Run the integration tests'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    useJUnitPlatform()
+}
+
+tasks.named('check').configure {
+    dependsOn 'integrationTest'
+}

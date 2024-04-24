@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:12:///databasename?TC_INITSCRIPT=file:src/test/resources/sql/init_postgres.sql
+    username: postgres
+    password: postgres
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update  # Depending on test management strategy
+  sql:
+    init:
+      mode: never  # Typically, avoid auto-running scripts unless specified per test case
+
+# Customize any other test-specific properties below
+logging:
+  level:
+    org.springframework: INFO
+    org.hibernate.SQL: DEBUG  # Only if detailed SQL logs are needed for debugging tests
