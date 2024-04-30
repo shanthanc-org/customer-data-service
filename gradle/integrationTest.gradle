@@ -6,6 +6,8 @@ buildscript {
 
 sourceSets {
     integrationTest {
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
         java.srcDir file('src/integationTest/java')
         resources.srcDir file('src/integrationTest/resources')
     }
@@ -22,8 +24,8 @@ dependencies {
 }
 
 tasks.register('integrationTest', Test) {
-    dependsOn 'compileIntegrationTests'
-    description = 'Run the integration tests'
+    group = 'verification'
+    description = 'Runs the integration tests.'
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
     useJUnitPlatform()
