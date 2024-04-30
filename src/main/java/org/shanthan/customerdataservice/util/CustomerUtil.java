@@ -3,6 +3,9 @@ package org.shanthan.customerdataservice.util;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Random;
 
 import static org.shanthan.customerdataservice.util.CustomerConstants.*;
@@ -32,5 +35,15 @@ public class CustomerUtil {
             sb.append(SEED_CHARACTERS.charAt(random.nextInt(SEED_CHARACTERS.length())));
         }
         return sb.toString();
+    }
+
+    public static boolean isValidDob(String dob) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        try {
+            LocalDate date = LocalDate.parse(dob, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 }

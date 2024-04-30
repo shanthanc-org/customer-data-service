@@ -1,7 +1,7 @@
 package org.shanthan.customerdataservice.repository;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -23,32 +23,38 @@ import static org.shanthan.customerdataservice.util.CustomerUtil.*;
 @Entity(name = "customer")
 public class CustomerEntity {
 
-  @NotEmpty
+  @NotBlank
   @Size(min = 9, max = 9)
   @Id
   private String accountKey;
 
-  @NotEmpty
+  @NotBlank
   @Size(min = 12, max = 12)
   private String accountNumber;
 
-  @NotEmpty
+  @NotBlank
   @Size(min = 3, max = 50)
   private String firstName;
 
-  @NotEmpty
+  @NotBlank
   @Size(min = 3, max = 50)
   private String lastName;
 
-  @NotEmpty
+  @NotBlank
   @Pattern(regexp = EMAIL_REGEXP)
   private String email;
 
-  @NotEmpty
+  @NotBlank
+  private String dateOfBirth;
+
+  @NotBlank
+  private String ssn;
+
+  @NotBlank
   @Pattern(regexp = PHONE_REGEXP)
   private String phoneNumber;
 
-  @NotEmpty
+  @NotBlank
   private String address;
 
   @CreatedDate

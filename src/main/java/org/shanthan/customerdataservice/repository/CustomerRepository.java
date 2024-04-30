@@ -8,15 +8,18 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerEntity, String> {
 
+
+
     List<CustomerEntity> findByLastName(String lastName);
 
     List<CustomerEntity> findByFirstName(String firstName);
 
-    List<CustomerEntity> findByEmail(String email);
+    CustomerEntity findByEmail(String email);
 
-    List<CustomerEntity> findByPhoneNumber(String phoneNumber);
+    CustomerEntity findByPhoneNumber(String phoneNumber);
 
-    CustomerEntity findByAccountKey(String accountKey);
+    CustomerEntity getCustomerEntityByAccountKey(String accountKey);
 
     CustomerEntity findByAccountNumber(String accountNumber);
+
 }
