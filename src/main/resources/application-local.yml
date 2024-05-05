@@ -1,4 +1,9 @@
 spring:
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/local
+    baseline-on-migrate: true
+    out-of-order: false
   datasource:
     url: jdbc:postgresql://localhost:5432/customer
     username: admin

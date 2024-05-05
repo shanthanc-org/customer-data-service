@@ -47,7 +47,7 @@ dependencies {
 
     //Web
     implementation ("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    implementation ("org.springframework.session:spring-session-jdbc:3.2.2")
+   // implementation ("org.springframework.session:spring-session-jdbc:3.2.2")
 
     //Validation
 
@@ -81,6 +81,12 @@ dependencies {
 //    testImplementation 'org.testcontainers:postgresql:1.16.2'
 
 }
+
+processIntegrationTestResources {
+    duplicatesStrategy = 'include' // Or 'include' or 'fail'
+}
+
+build.dependsOn integrationTest
 
 tasks.named('test') {
     useJUnitPlatform()

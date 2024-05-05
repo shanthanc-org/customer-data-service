@@ -21,6 +21,9 @@ configurations {
 dependencies {
     integrationTestImplementation ("org.testcontainers:junit-jupiter:${testVersion}")
     integrationTestImplementation ("org.testcontainers:postgresql:${testVersion}")
+    // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
+    integrationTestImplementation("io.rest-assured:rest-assured:5.4.0")
+
 }
 
 tasks.register('integrationTest', Test) {
@@ -34,3 +37,5 @@ tasks.register('integrationTest', Test) {
 tasks.named('check').configure {
     dependsOn 'integrationTest'
 }
+
+test.finalizedBy integrationTest

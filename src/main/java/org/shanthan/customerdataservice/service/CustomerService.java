@@ -50,6 +50,7 @@ public class CustomerService {
         }
     }
 
+    @Transactional
     public void deleteCustomer(String accountKey) {
         if (isEmpty(accountKey)) {
             log.error("Account key is null or empty in service call to delete customer");
@@ -122,25 +123,28 @@ public class CustomerService {
 
     @Transactional
     public Customer updateCustomerAddress(String accountKey, Address address) {
-        if(isEmpty(accountKey)) {
+        if (isEmpty(accountKey)) {
             log.error("Account key is null or empty in service call to update customer address");
             throw new CustomerDataException(INTERNAL_SERVER_ERROR, "Account key cannot be null or empty");
         }
 
-        if(isEmpty(address)) {
+        if (isEmpty(address)) {
             log.error("Address is null or empty in service call to update customer address");
             throw new CustomerDataException(INTERNAL_SERVER_ERROR, "Address cannot be null or empty");
         }
 
         if (!customerRepository.existsById(accountKey)) {
             log.error(CUSTOMER_WITH_ACC_KEY_DOES_NOT_EXIST, accountKey);
-            throw new CustomerDataException(INTERNAL_SERVER_ERROR, "Cusomer with account key " + accountKey +
+            throw new CustomerDataException(INTERNAL_SERVER_ERROR, "Customer with account key " + accountKey +
                     " does not exist");
         }
 
         try {
             CustomerEntity entity = customerRepository.getCustomerEntityByAccountKey(accountKey);
+            deleteCustomer(accountKey);
             Customer customer = customerMapper.mapToDomain(entity);
+            customer.setAccountKey(accountKey);
+            customer.setAccountNumber(customer.getAccountNumber());
             customer.setAddress(address);
             CustomerEntity updatedEntity =
                     customerRepository.saveAndFlush(customerMapper.mapToEntity(customer));

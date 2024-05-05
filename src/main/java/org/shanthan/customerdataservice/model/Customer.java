@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.shanthan.customerdataservice.annotation.DateOfBirth;
 
 import static org.shanthan.customerdataservice.util.CustomerConstants.*;
 
@@ -21,11 +22,9 @@ import static org.shanthan.customerdataservice.util.CustomerConstants.*;
 public class Customer {
 
     @Size(min = ACC_KEY_LEN, max = ACC_KEY_LEN)
-    @JsonIgnore
     private String accountKey;
 
     @Size(min = ACC_NUM_LEN, max = ACC_NUM_LEN)
-    @JsonIgnore
     private String accountNumber;
 
     @NotBlank(message = "First name cannot be null or empty")
@@ -40,8 +39,7 @@ public class Customer {
     @Pattern(regexp = EMAIL_REGEXP, message = "Invalid email format")
     private String email;
 
-    @NotBlank(message = "Date of Birth cannot be null or empty")
-    @Pattern(regexp = DATE_OF_BIRTH_PATTERN, message = "Invalid date format. Must be -> MM/dd/yyyy")
+    @DateOfBirth
     private String dateOfBirth;
 
     @NotBlank(message = "SSN cannot be null or empty")
@@ -52,6 +50,5 @@ public class Customer {
     @Pattern(regexp = PHONE_REGEXP, message = "invalid phone format")
     private String phoneNumber;
 
-    @NotEmpty(message = "Address cannot be null or empty")
     private Address address;
 }

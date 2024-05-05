@@ -24,9 +24,25 @@ public class CustomerConstants {
 
     public static final String SSN_REGEXP = "^\\d{3}-\\d{2}-\\d{4}$";
 
+    public static final String ACC_KEY_REGEXP = "^[1-5][0-9]{8}$";
+
+    public static final String ZIPCODE_REGEXP = "^[0-9]{5}(-[0-9]{4})?$";
+
     public static final String DATE_OF_BIRTH_PATTERN = "MM/dd/yyyy";
 
     public static final String CUSTOMER_WITH_ACC_KEY_DOES_NOT_EXIST = "Customer with account key {} does not exist";
+
+    public static final String CUSTOMER_UPDATE_SUCCESSFUL = "Customer Address updated successfully";
+
+    public static final String DELETE_SUCCESS_MESSAGE = "Customer deleted successfully";
+
+    public static final String SPECIFIC_CAUSE = "specificCause";
+
+    public static final String CODE = "code";
+
+    public static final String PROBLEM_DETAIL = "problemDetail";
+
+    public static final String METHOD = "method";
 
 
 }

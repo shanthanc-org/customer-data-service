@@ -66,6 +66,9 @@ public enum USState {
     }
 
     public static boolean isValidState(String state) {
+        if (state == null || state.isEmpty()) {
+            return false;
+        }
         for (USState usState : USState.values()) {
             if (usState.abbreviation.equalsIgnoreCase(state) || usState.name.equalsIgnoreCase(state)) {
                 return true;

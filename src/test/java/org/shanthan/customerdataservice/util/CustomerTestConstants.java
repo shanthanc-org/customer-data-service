@@ -62,5 +62,25 @@ public class CustomerTestConstants {
             "{\"street\":\"56 S Jump St\",\"city\":\"Chicago\",\"state\":\"IL\",\"zipCode\":\"66226\"}";
 
 
+    public static final String SPECIFIC_CAUSE = "specificCause";
+    public static final String SOME_SPECIFIC_CAUSE = "someSpecificCause";
+
+    public static final String CODE = "code";
+    public static final String SOME_CODE = "someCode";
+
+    public static final String PROBLEM_DETAIL = "problemDetail";
+    public static final String SOME_PROBLEM_DETAIL = "someProblemDetail";
+
+    public static final String METHOD = "method";
+    public static final String SOME_METHOD = "someMethod";
+
+    public static final String SOME_EXCEPTION = "someException";
+
+    public static final String SOME_RUNTIME_EXCEPTION = "someRuntimeException";
+    public static final String SOME_MESSAGE = "someMessage";
+
+    public static final String SOME_FIELD_MESSAGE = "someFieldMessage";
+    public static final String SOME_DEFAULT_MESSAGE = "someDefaultMessage";
+    public static final String SOME_OBJECT_NAME = "someObjectName";
 
 }

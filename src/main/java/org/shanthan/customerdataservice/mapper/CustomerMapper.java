@@ -23,11 +23,14 @@ public class CustomerMapper {
         try {
 
             customerEntity = CustomerEntity.builder()
+                    .accountKey(customer.getAccountKey() != null ? customer.getAccountKey() : null)
+                    .accountNumber(customer.getAccountNumber() != null ? customer.getAccountNumber() : null)
                     .firstName(customer.getFirstName())
                     .lastName(customer.getLastName())
                     .ssn(customer.getSsn())
                     .dateOfBirth(customer.getDateOfBirth())
                     .email(customer.getEmail())
+                    .phoneNumber(customer.getPhoneNumber())
                     .address(convertAddressToString(customer.getAddress()))
                     .build();
         } catch (Exception e) {

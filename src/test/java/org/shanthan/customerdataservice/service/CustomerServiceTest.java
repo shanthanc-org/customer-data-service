@@ -281,6 +281,7 @@ class CustomerServiceTest {
 
         when(repository.existsById(anyString())).thenReturn(true);
         when(repository.getCustomerEntityByAccountKey(anyString())).thenReturn(customerEntity);
+        doNothing().when(repository).deleteById(anyString());
         when(customerMapper.mapToDomain(eq(customerEntity))).thenReturn(customer);
         when(customerMapper.mapToEntity(eq(updatedCustomer))).thenReturn(updatedEntity);
         when(customerMapper.mapToDomain(eq(updatedEntity))).thenReturn(updatedCustomer);
