@@ -46,13 +46,13 @@ public class CustomerDataServiceIntegrationTest extends BaseIntegrationTest {
                 .contentType(ContentType.JSON)
                 .body(customer)
                 .when()
-                .post("v1/add/customer")
+                .post("api/v1/add/customer")
                 .then()
                 .statusCode(201)
                 .body("accountKey.length()", equalTo(ACC_KEY_LEN),
                         "accountNumber.length()", equalTo(ACC_NUM_LEN))
                 .extract()
-                .as(CustomerAccDataResponse.class);
+                .as(CustomerAddSuccessResponse.class);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class CustomerDataServiceIntegrationTest extends BaseIntegrationTest {
                 .contentType(ContentType.JSON)
                 .pathParam("accountKey", GET_ACC_KEY)
                 .when()
-                .get("v1/get/customer/{accountKey}")
+                .get("api/v1/get/customer/{accountKey}")
                 .then()
                 .statusCode(200)
                 .body("accountNumber", equalTo(GET_ACC_NUM))
@@ -75,7 +75,7 @@ public class CustomerDataServiceIntegrationTest extends BaseIntegrationTest {
                 .contentType(ContentType.JSON)
                 .pathParam("accountKey", DEL_ACC_KEY)
                 .when()
-                .delete("v1/delete/customer/{accountKey}")
+                .delete("api/v1/delete/customer/{accountKey}")
                 .then()
                 .statusCode(200)
                 .body("accountKey", equalTo(DEL_ACC_KEY))
@@ -95,7 +95,7 @@ public class CustomerDataServiceIntegrationTest extends BaseIntegrationTest {
                 .contentType(ContentType.JSON)
                 .body(updateAddress)
                 .when()
-                .put("v1/customer/update/address")
+                .put("api/v1/customer/update/address")
                 .then()
                 .statusCode(200)
                 .body("accountKey", equalTo(UPDATE_ACC_KEY))
@@ -110,7 +110,7 @@ public class CustomerDataServiceIntegrationTest extends BaseIntegrationTest {
                 .contentType(ContentType.JSON)
                 .pathParam("firstName", REPEAT_FIRST_NAME)
                 .when()
-                .get("v1/get/customers/by/firstName/{firstName}")
+                .get("api/v1/get/customers/by/firstName/{firstName}")
                 .then()
                 .statusCode(200)
                 .body("customers", hasSize(2))
@@ -124,7 +124,7 @@ public class CustomerDataServiceIntegrationTest extends BaseIntegrationTest {
                 .contentType(ContentType.JSON)
                 .pathParam("lastName", REPEAT_LAST_NAME)
                 .when()
-                .get("v1/get/customers/by/lastName/{lastName}")
+                .get("api/v1/get/customers/by/lastName/{lastName}")
                 .then()
                 .statusCode(200)
                 .body("customers", hasSize(2))

@@ -10,9 +10,9 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, String
 
 
 
-    List<CustomerEntity> findByLastName(String lastName);
+    List<CustomerEntity> findByLastNameIgnoreCase(String lastName);
 
-    List<CustomerEntity> findByFirstName(String firstName);
+    List<CustomerEntity> findByFirstNameIgnoreCase(String firstName);
 
     CustomerEntity findByEmail(String email);
 

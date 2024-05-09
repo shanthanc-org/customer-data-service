@@ -8,7 +8,7 @@ import org.shanthan.customerdataservice.exception.CustomerDataException;
 import org.shanthan.customerdataservice.mapper.CustomerMapper;
 import org.shanthan.customerdataservice.model.Address;
 import org.shanthan.customerdataservice.model.Customer;
-import org.shanthan.customerdataservice.model.CustomerAccDataResponse;
+import org.shanthan.customerdataservice.model.CustomerAddSuccessResponse;
 import org.shanthan.customerdataservice.repository.CustomerEntity;
 import org.shanthan.customerdataservice.repository.CustomerRepository;
 import org.shanthan.customerdataservice.util.CustomerUtil;
@@ -176,7 +176,7 @@ class CustomerServiceTest {
         when(customerMapper.mapToEntity(any(Customer.class))).thenReturn(customerEntity);
         when(repository.saveAndFlush(any(CustomerEntity.class))).thenReturn(customerEntity);
 
-        CustomerAccDataResponse result = subject.saveCustomer(customer);
+        CustomerAddSuccessResponse result = subject.saveCustomer(customer);
 
         assertNotNull(result);
         assertNotNull(result.getAccountKey());
@@ -330,7 +330,7 @@ class CustomerServiceTest {
         CustomerMapper customerMapper = new CustomerMapper();
         ReflectionTestUtils.setField(subject, "customerMapper", customerMapper);
 
-        when(repository.findByFirstName(anyString())).thenReturn(customerEntities);
+        when(repository.findByFirstNameIgnoreCase(anyString())).thenReturn(customerEntities);
 
         List<Customer> result = subject.getCustomersByFirstName(TEST_FIRST_NAME);
         assertNotNull(result);
@@ -366,7 +366,7 @@ class CustomerServiceTest {
         CustomerMapper customerMapper = new CustomerMapper();
         ReflectionTestUtils.setField(subject, "customerMapper", customerMapper);
 
-        when(repository.findByLastName(anyString())).thenReturn(customerEntities);
+        when(repository.findByLastNameIgnoreCase(anyString())).thenReturn(customerEntities);
 
         List<Customer> result = subject.getCustomersByLastName(TEST_LAST_NAME);
         assertNotNull(result);

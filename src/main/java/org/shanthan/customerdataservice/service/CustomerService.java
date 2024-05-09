@@ -1,12 +1,13 @@
 package org.shanthan.customerdataservice.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.shanthan.customerdataservice.exception.CustomerDataException;
 import org.shanthan.customerdataservice.mapper.CustomerMapper;
 import org.shanthan.customerdataservice.model.Address;
 import org.shanthan.customerdataservice.model.Customer;
-import org.shanthan.customerdataservice.model.CustomerAccDataResponse;
+import org.shanthan.customerdataservice.model.CustomerAddSuccessResponse;
 import org.shanthan.customerdataservice.repository.CustomerEntity;
 import org.shanthan.customerdataservice.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class CustomerService {
         this.customerMapper = customerMapper;
     }
 
-    public CustomerAccDataResponse saveCustomer(Customer customer) {
+    public CustomerAddSuccessResponse saveCustomer(Customer customer) {
         if (isEmpty(customer)) {
             log.error("Customer object null or empty in service call to save customer");
             throw new CustomerDataException(INTERNAL_SERVER_ERROR,
@@ -40,11 +41,15 @@ public class CustomerService {
         CustomerEntity result;
         try {
             result = customerRepository.saveAndFlush(customerEntity);
-            return CustomerAccDataResponse.builder()
+            return CustomerAddSuccessResponse.builder()
                     .accountKey(result.getAccountKey())
                     .accountNumber(result.getAccountNumber())
                     .build();
-        } catch (Exception e) {
+        } catch (ConstraintViolationException cve) {
+            log.error("Error saving customer object", cve.getMessage());
+            throw new CustomerDataException(BAD_REQUEST, cve.getCause().getMessage(), cve);
+        }
+        catch (Exception e) {
             log.error("Error saving customer -> {} ", e.getMessage());
             throw new CustomerDataException(INTERNAL_SERVER_ERROR, e.getMessage(), e);
         }
@@ -58,7 +63,7 @@ public class CustomerService {
         }
         if (!customerRepository.existsById(accountKey)) {
             log.error(CUSTOMER_WITH_ACC_KEY_DOES_NOT_EXIST, accountKey);
-            return;
+            throw new CustomerDataException(BAD_REQUEST, "Customer with account key " + accountKey + " does not exist");
         }
         try {
             customerRepository.deleteById(accountKey);
@@ -75,7 +80,7 @@ public class CustomerService {
         }
         if (!customerRepository.existsById(accountKey)) {
             log.error(CUSTOMER_WITH_ACC_KEY_DOES_NOT_EXIST, accountKey);
-            return Customer.builder().build();
+            throw new CustomerDataException(BAD_REQUEST, "Customer with account key " + accountKey + " does not exist" );
         }
         CustomerEntity entity;
         Customer result;
@@ -96,10 +101,18 @@ public class CustomerService {
         }
         List<Customer> result = new ArrayList<>();
         try {
-            List<CustomerEntity> entities = customerRepository.findByFirstName(firstName);
+            List<CustomerEntity> entities = customerRepository.findByFirstNameIgnoreCase(firstName);
             entities.forEach(entity -> result.add(customerMapper.mapToDomain(entity)));
+            if(isEmpty(result) || result.isEmpty()) {
+                log.error("No customers found for given first name {}", firstName);
+                throw new CustomerDataException(BAD_REQUEST, "No customers found for given first name " + firstName);
+            }
             return result;
-        } catch (Exception e) {
+        } catch (CustomerDataException cde) {
+            log.error(cde.getMessage());
+            throw new CustomerDataException(cde.getHttpStatus(), cde.getMessage(), cde);
+        }
+        catch (Exception e) {
             log.error("Error retrieving customers by first name -> {} ", e.getMessage());
             throw new CustomerDataException(INTERNAL_SERVER_ERROR, e.getMessage(), e);
         }
@@ -112,10 +125,18 @@ public class CustomerService {
         }
         List<Customer> result = new ArrayList<>();
         try {
-            List<CustomerEntity> entities = customerRepository.findByLastName(lastName);
+            List<CustomerEntity> entities = customerRepository.findByLastNameIgnoreCase(lastName);
             entities.forEach(entity -> result.add(customerMapper.mapToDomain(entity)));
+            if(isEmpty(result) || result.isEmpty()) {
+                log.error("No customers found for given last name {}", lastName);
+                throw new CustomerDataException(BAD_REQUEST, "No customers found for given last name " + lastName);
+            }
             return result;
-        } catch (Exception e) {
+        } catch (CustomerDataException cde) {
+            log.error(cde.getMessage());
+            throw new CustomerDataException(cde.getHttpStatus(), cde.getMessage(), cde);
+        }
+        catch (Exception e) {
             log.error("Error retrieving customers by last name -> {} ", e.getMessage());
             throw new CustomerDataException(INTERNAL_SERVER_ERROR, e.getMessage(), e);
         }

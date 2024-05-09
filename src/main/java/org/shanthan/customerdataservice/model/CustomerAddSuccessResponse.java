@@ -4,7 +4,7 @@ import lombok.*;
 
 @Value
 @Builder
-public class CustomerAccDataResponse {
+public class CustomerAddSuccessResponse {
     String accountKey;
     String accountNumber;
 }

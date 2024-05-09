@@ -16,11 +16,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public class BaseIntegrationTest {
 
     @Container
-    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest")
-            .withDatabaseName("testdb")
-            .withUsername("postgres")
-            .withPassword("password")
-            .withInitScript("init.sql");
+    public static PostgreSQLContainer<?> postgreSQLContainer =
+            new PostgreSQLContainer<>("postgres:latest")
+                    .withDatabaseName("testdb")
+                    .withUsername("postgres")
+                    .withPassword("password")
+                    .withInitScript("init.sql");
 
     @DynamicPropertySource
     static void prepareDatabase(DynamicPropertyRegistry registry) {
@@ -39,23 +40,10 @@ public class BaseIntegrationTest {
                 .dataSource(postgreSQLContainer.getJdbcUrl(), postgreSQLContainer.getUsername(),
                         postgreSQLContainer.getPassword())
                 .baselineOnMigrate(true)
-                .locations("classpath:/db/migration", "classpath:/db/test_migration")
+                .locations("classpath:/db/migration")
                 .load()
                 .migrate();
     }
-
-//    @AfterEach
-//    public void cleanupDb() {
-//        // Configure Flyway
-//        Flyway flyway = Flyway.configure()
-//                .dataSource(postgreSQLContainer.getJdbcUrl(), postgreSQLContainer.getUsername(), postgreSQLContainer.getPassword())
-//                .load();
-//
-//        // Cleans the schema
-//        flyway.clean();
-//        // Optionally re-migrate to restore a baseline state
-//        flyway.migrate();
-//    }
 
     @AfterAll
     static void cleanup() {

@@ -31,6 +31,7 @@ public class CustomerConstants {
     public static final String DATE_OF_BIRTH_PATTERN = "MM/dd/yyyy";
 
     public static final String CUSTOMER_WITH_ACC_KEY_DOES_NOT_EXIST = "Customer with account key {} does not exist";
+    public static final String CUSTOMER_WITH_ACCOUNT_KEY_DOES_NOT_EXIST = "Customer with account key does not exist";
 
     public static final String CUSTOMER_UPDATE_SUCCESSFUL = "Customer Address updated successfully";
 

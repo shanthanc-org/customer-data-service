@@ -139,13 +139,13 @@ class CustomerDataControllerTest {
 
     @Test
     void givenValidCustomerRequest_whenAddCustomer_thenReturnCustomerWith201HttpStatus() {
-        CustomerAccDataResponse expectedBody = CustomerAccDataResponse.builder()
+        CustomerAddSuccessResponse expectedBody = CustomerAddSuccessResponse.builder()
                 .accountKey(TEST_ACC_KEY)
                 .accountNumber(accNum1)
                 .build();
 
         when(customerService.saveCustomer(any(Customer.class))).thenReturn(expectedBody);
-        ResponseEntity<CustomerAccDataResponse> responseEntity = subject.addCustomer(customer1);
+        ResponseEntity<CustomerAddSuccessResponse> responseEntity = subject.addCustomer(customer1);
 
         assertNotNull(responseEntity);
         assertNotNull(responseEntity.getStatusCode());

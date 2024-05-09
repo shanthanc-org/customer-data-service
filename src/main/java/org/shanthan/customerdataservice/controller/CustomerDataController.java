@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @Slf4j
-@RequestMapping("/")
+@RequestMapping("/api/")
 public class CustomerDataController {
 
     private final CustomerService customerService;
@@ -26,10 +26,10 @@ public class CustomerDataController {
 
 
     @PostMapping("v1/add/customer")
-    public ResponseEntity<CustomerAccDataResponse> addCustomer(@RequestBody @Valid Customer customer) {
+    public ResponseEntity<CustomerAddSuccessResponse> addCustomer(@RequestBody @Valid Customer customer) {
         log.info("Adding customer with firstName : {}", customer.getFirstName());
 
-        CustomerAccDataResponse responseBody = customerService.saveCustomer(customer);
+        CustomerAddSuccessResponse responseBody = customerService.saveCustomer(customer);
 
         return ResponseEntity.status(CREATED).body(responseBody);
     }
